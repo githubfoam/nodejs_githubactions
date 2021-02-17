@@ -1,5 +1,5 @@
 
-name: "Nodejs CI workflow"
+name: "Nodejs CI workflow ubuntu"
 
 on:
   push:
