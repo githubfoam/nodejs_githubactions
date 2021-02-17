@@ -1,0 +1,43 @@
+
+name: "Nodejs CI workflow"
+
+on:
+  push:
+    branches: [ dev ]
+  # pull_request:
+  #   branches: [ githubactions_powershell ]
+
+
+jobs:
+
+  build-nodejs-os-matrix:
+    name: "OS matrix nodejs"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        # https://github.com/actions/setup-java
+        # test against latest update of each major Java version, as well as specific updates of LTS versions:
+        # java: [ 1.6, 6.0.83, 7, 7.0.181, 8, 8.0.192, 9.0.x, 10, 11.0.x, 11.0.3, 12, 13 ]
+        # java: [ 11.0.3, 12, 13 ]
+        node-version: [8.x, 10.x, 12.x]
+        # python-version: [2.7, 3.6, 3.7, 3.8, pypy2, pypy3]
+        # exclude:
+        #   - os: macos-latest
+        #     python-version: 3.6
+        #   - os: windows-latest
+        #     python-version: 3.6
+    steps:
+      - uses: actions/checkout@v2
+      # - name: "Setup java"
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: ${{ matrix.java }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}          
+      - name: "npm install"                
+        run: npm install                    
+
+     
